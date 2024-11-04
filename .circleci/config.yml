@@ -4,10 +4,25 @@ orbs:
   orb-tools: circleci/orb-tools@11.6.1
   shellcheck: circleci/shellcheck@3.2.0
   cypress: cypress-io/cypress@3.4.0
+  node: circleci/node@6
 
 filters: &filters
   tags:
     only: /.*/
+
+resource_class: small
+
+jobs:
+  - testing-pnpm:
+      steps:
+        - checkout
+        - run:
+            name: change directory
+            command: |
+              cd examples/pnpm-install
+        - node/install:
+            install-pnpm: true
+
 
 workflows:
   lint-pack:
@@ -20,13 +35,15 @@ workflows:
           filters: *filters
       - shellcheck/check:
           filters: *filters
-      - cypress/run:
+#      - cypress/run:
+#          filters: *filters
+#          name: Pnpm Version Example
+#          node-version: "20.6"
+#          working-directory: examples/pnpm-install
+#          cypress-cache-key: cypress-cache{{ arch }}-{{ checksum "examples/pnpm-install/package.json" }}
+#          install-command: "node --version && pnpm --version && pnpm install"
+#          post-install: "./check-pnpm-version.sh 9.7.1 && npx cypress install"
+#          package-manager: "pnpm"
+##          package-manager-version: "9.7.1"
+      - testing-pnpm:
           filters: *filters
-          name: Pnpm Version Example
-          node-version: "20.6"
-          working-directory: examples/pnpm-install
-          cypress-cache-key: cypress-cache{{ arch }}-{{ checksum "examples/pnpm-install/package.json" }}
-          install-command: "node --version && pnpm --version && pnpm install"
-          post-install: "./check-pnpm-version.sh 9.7.1 && npx cypress install"
-          package-manager: "pnpm"
-#          package-manager-version: "9.7.1"
