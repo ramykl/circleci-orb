@@ -4,16 +4,15 @@ orbs:
   orb-tools: circleci/orb-tools@11.6.1
   shellcheck: circleci/shellcheck@3.2.0
   cypress: cypress-io/cypress@3.4.0
-  node: circleci/node@6
+  node: circleci/node@5
 
 filters: &filters
   tags:
     only: /.*/
 
-resource_class: small
-
 jobs:
   testing-pnpm:
+    resource_class: small
     docker:
       - image: cimg/base:stable
     steps:
