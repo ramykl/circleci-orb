@@ -100,7 +100,7 @@ workflows:
           package-manager: "pnpm"
       - cypress/run:
           filters: *filters
-          name: Pnpm Example
+          name: Pnpm Version Example
           working-directory: examples/pnpm-install
           cypress-cache-key: cypress-cache{{ arch }}-{{ checksum "examples/pnpm-install/package.json" }}
           post-install: "./check-pnpm-version.sh 9.7.1 && npx cypress install"
