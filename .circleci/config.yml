@@ -23,6 +23,7 @@ workflows:
       - cypress/run:
           filters: *filters
           name: Pnpm Version Example
+          node-version: "20.6"
           working-directory: examples/pnpm-install
           cypress-cache-key: cypress-cache{{ arch }}-{{ checksum "examples/pnpm-install/package.json" }}
           install-command: "node --version && pnpm --version && pnpm install"
