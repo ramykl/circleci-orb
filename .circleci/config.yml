@@ -13,15 +13,15 @@ filters: &filters
 resource_class: small
 
 jobs:
-  - testing-pnpm:
-      steps:
-        - checkout
-        - run:
-            name: change directory
-            command: |
-              cd examples/pnpm-install
-        - node/install:
-            install-pnpm: true
+  testing-pnpm:
+    steps:
+      - checkout
+      - run:
+          name: change directory
+          command: |
+            cd examples/pnpm-install
+      - node/install:
+          install-pnpm: true
 
 
 workflows:
