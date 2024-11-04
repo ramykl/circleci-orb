@@ -3,7 +3,7 @@ setup: true
 orbs:
   orb-tools: circleci/orb-tools@11.6.1
   shellcheck: circleci/shellcheck@3.2.0
-  cypress: cypress-io/cypress
+  cypress: cypress-io/cypress@3.4.0
 
 filters: &filters
   tags:
