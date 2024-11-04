@@ -11,7 +11,7 @@ filters: &filters
     only: /.*/
 
 jobs:
-  testing-pnpm:
+  testing-pnpm-node-orb:
     resource_class: small
     docker:
       - image: cimg/base:stable
@@ -23,7 +23,18 @@ jobs:
       - node/install-packages:
           app-dir: "examples/pnpm-install"
           pkg-manager: "pnpm"
-
+  testing-pnpm-cypress:
+    resource_class: small
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - cypress/install:
+          working-directory: examples/pnpm-install
+          cypress-cache-key: cypress-cache{{ arch }}-{{ checksum "examples/pnpm-install/package.json" }}
+          include-branch-in-node-cache-key: true
+          package-manager: "pnpm"
+          post-install: "pnpm --version"
 
 workflows:
   lint-pack:
@@ -46,4 +57,6 @@ workflows:
 #          post-install: "./check-pnpm-version.sh 9.7.1 && npx cypress install"
 #          package-manager: "pnpm"
 ##          package-manager-version: "9.7.1"
-      - testing-pnpm
+      - testing-pnpm-node-orb
+      - testing-pnpm-cypress:
+          filters: *filters
