@@ -14,8 +14,8 @@ resource_class: small
 
 jobs:
   testing-pnpm:
-    executor:
-      name: node/default
+    docker:
+      - image: cimg/base:stable
     steps:
       - checkout
       - node/install:
