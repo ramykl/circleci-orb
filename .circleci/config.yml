@@ -18,12 +18,12 @@ jobs:
       name: node/default
     steps:
       - checkout
-      - run:
-          name: change directory
-          command: |
-            cd examples/pnpm-install
       - node/install:
           install-pnpm: true
+      - node/install-packages:
+          override-ci-command: "pnpm install"
+          app-dir: "examples/pnpm-install"
+          pkg-manager: "pnpm"
 
 
 workflows:
